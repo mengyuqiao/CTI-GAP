@@ -1,0 +1,40 @@
+# requirements.txt
+# Runtime prerequisite: Python 3.10+.
+# Compatibility ranges.
+# Resolve and test in a clean environment, then preserve exact installed
+# versions (including transitive dependencies) as a separate freeze artifact.
+# Installation does not resolve null experimental settings in config.yaml.
+
+# Validated records and YAML configuration.
+pydantic>=2.8,<3
+PyYAML>=6.0,<7
+
+# Benchmark ingestion and versioned Hugging Face artifacts.
+datasets>=3.0,<5
+huggingface-hub>=0.25,<2
+
+# Hosted/OpenAI-compatible inference clients and strict prompt rendering.
+litellm>=1.60,<2
+Jinja2>=3.1,<4
+
+# Numerical processing, tabular artifacts, matching, and baseline metrics.
+numpy>=1.26,<3
+pandas>=2.2,<3
+scipy>=1.13,<2
+scikit-learn>=1.5,<2
+
+# Reference-based text scoring and independent annotation agreement.
+sacrebleu>=2.4,<3
+krippendorff>=0.8,<1
+
+# Human annotation interface and configured HTTP acquisition.
+streamlit>=1.40,<2
+httpx>=0.27,<1
+
+# Offline unit, integration, and audit-isolation testing.
+pytest>=8.0,<10
+
+# sqlite3 and other standard-library modules require no pip packages.
+# No training or GPU-serving dependencies: local inference is hosted separately.
+# Optional embedding, retrieval, reranking, and AlignScore dependencies remain
+# deferred until their protocols, implementations, and checkpoints are resolved.

@@ -1,0 +1,668 @@
+## config.yaml
+## null settings have no implicit default.
+## They must be supplied before executing the affected stage.
+
+study:
+  title: "Uncovering Vulnerabilities of LLM-Assisted Cyber Threat Intelligence"
+  execution_mode: "inference_and_analysis"
+  random_seed: null
+
+training:
+  ## The paper does not train or fine-tune the evaluated models.
+  required: false
+  learning_rate: null
+  batch_size: null
+  epochs: null
+  optimizer: null
+  weight_decay: null
+  learning_rate_scheduler: null
+  gradient_accumulation_steps: null
+
+data:
+  ## Original benchmark sizes are not evaluation-subset sizes.
+  benchmarks:
+    ctibench:
+      reported_original_instances: 5610
+      version: null
+      source_path: null
+      selection_manifest: null
+
+    sevenllm_bench:
+      reported_original_instances: 92701
+      version: null
+      source_path: null
+      selection_manifest: null
+
+    swe_bench:
+      reported_original_instances: 2294
+      version: null
+      source_path: null
+      selection_manifest: null
+
+    cyberteam:
+      reported_original_instances: 452293
+      version: null
+      source_path: null
+      selection_manifest: null
+
+  evidence_sources:
+    - "CVE"
+    - "NVD"
+    - "EPSS"
+    - "MITRE ATT&CK"
+    - "CAPEC"
+    - "CISA KEV"
+    - "MISP"
+    - "VirusTotal"
+    - "AlienVault OTX"
+    - "Vendor advisories"
+    - "CERT bulletins"
+    - "Advisory-linked detection-rule repositories"
+
+  evidence_manifest: null
+  historical_snapshot_manifest: null
+  task_conversion_manifest: null
+  reference_answer_manifest: null
+
+  preprocessing:
+    normalize_identifiers: true
+    align_prediction_chronology: true
+    construct_reference_entity_mappings: true
+    preserve_source_provenance: true
+    alias_table_version: null
+    taxonomy_versions: null
+    deduplication_policy: null
+
+  ## Task counts are rounded and may overlap across underlying cases.
+  task_counts_are_approximate: true
+  task_counts_may_overlap: true
+
+models:
+  evaluation:
+    G5:
+      name: "GPT-5"
+      endpoint_or_checkpoint: null
+      revision: null
+    Go4:
+      name: "GPT-o4 mini"
+      endpoint_or_checkpoint: null
+      revision: null
+    CLD:
+      name: "Claude Sonnet 4"
+      endpoint_or_checkpoint: null
+      revision: null
+    GEM:
+      name: "Gemini 2.5"
+      endpoint_or_checkpoint: null
+      revision: null
+    LL70:
+      name: "Llama-3.1-70B-Instruct"
+      endpoint_or_checkpoint: null
+      revision: null
+    MIX:
+      name: "Mixtral-8x7B-Instruct-v0.1"
+      endpoint_or_checkpoint: null
+      revision: null
+    QWN:
+      name: "Qwen2.5-14B-Instruct"
+      endpoint_or_checkpoint: null
+      revision: null
+    GRK:
+      name: "Grok-2"
+      endpoint_or_checkpoint: null
+      revision: null
+    FSC:
+      name: "Foundation-Sec-8B"
+      endpoint_or_checkpoint: null
+      revision: null
+    CB0:
+      name: "Cyber-Zero"
+      endpoint_or_checkpoint: null
+      revision: null
+    ZYS:
+      name: "ZySec-AI-SecurityLLM"
+      endpoint_or_checkpoint: null
+      revision: null
+    LLY:
+      name: "Lily-Cybersecurity-7B-v0.2"
+      endpoint_or_checkpoint: null
+      revision: null
+    CBS:
+      name: "CyberBase-13b"
+      endpoint_or_checkpoint: null
+      revision: null
+    SPT:
+      name: "clouditera-secgpt"
+      endpoint_or_checkpoint: null
+      revision: null
+    DHT:
+      name: "DeepHat-V1-7B"
+      endpoint_or_checkpoint: null
+      revision: null
+
+  categorization_panel:
+    - name: "GPT-5"
+      endpoint_or_checkpoint: null
+      revision: null
+    - name: "Llama-4-17B"
+      endpoint_or_checkpoint: null
+      revision: null
+    - name: "Gemini 2.5"
+      endpoint_or_checkpoint: null
+      revision: null
+    - name: "Claude Sonnet 4"
+      endpoint_or_checkpoint: null
+      revision: null
+
+inference:
+  ## The template provides ranges, not the actual experimental values.
+  temperature: null
+  top_p: null
+  paper_template_ranges:
+    temperature: [0.0, 0.3]
+    top_p: [0.8, 1.0]
+
+  max_output_tokens: null
+  context_window: null
+  batch_size: null
+  concurrency: null
+  precision: null
+  quantization: null
+  reasoning_settings: null
+  truncation_policy: null
+  retry_policy: null
+
+evaluation:
+  runs: 5
+  run_seeds: null
+  report_mean: true
+  report_standard_deviation: true
+  standard_deviation_ddof: null
+  reporting_scale: [0, 100]
+
+  prompt:
+    template_path: null
+    task_guidance_manifest: null
+    output_profile_manifest: null
+    json_only: true
+    supplied_evidence_only: true
+    external_browsing: false
+    enforce_snapshot_date: true
+    require_evidence_references: true
+    invent_identifiers: false
+    insufficient_context_status: "NEED_MORE_CONTEXT"
+    allowed_statuses:
+      - "OK"
+      - "NEED_MORE_CONTEXT"
+      - "UNSUPPORTED"
+    maximum_justification_words: 40
+    offensive_guidance_allowed: false
+
+  tasks:
+    contextualization:
+      affected_systems:
+        approximate_instances: 3900
+        metric: "f1"
+      attack_infrastructure:
+        approximate_instances: 4100
+        metric: "f1"
+      vulnerability_linking:
+        approximate_instances: 3500
+        metric: "accuracy"
+      malware_family_mapping:
+        approximate_instances: 2100
+        metric: "f1"
+      ioc_normalization:
+        approximate_instances: 3100
+        metric: "f1"
+      threat_report_alignment:
+        approximate_instances: 2000
+        metric: "bleu"
+      event_timeline_construction:
+        approximate_instances: 1500
+        metric: "bleu"
+      graph_population:
+        approximate_instances: 2300
+        metric: "accuracy"
+      source_reliability_scoring:
+        approximate_instances: 1600
+        metric: "roc_auc"
+
+    attribution:
+      threat_actor_linking:
+        approximate_instances: 2100
+        metric: "accuracy"
+      ttp_extraction:
+        approximate_instances: 3000
+        metric: "f1"
+      campaign_attribution:
+        approximate_instances: 1800
+        metric: "accuracy"
+      infrastructure_reuse:
+        approximate_instances: 1200
+        metric: "f1"
+      language_style_profiling:
+        approximate_instances: 1300
+        metric: "accuracy"
+      false_flag_detection:
+        approximate_instances: 900
+        metric: "f1"
+      evidence_weighting:
+        approximate_instances: 1500
+        metric: "bleu"
+      relation_graph_building:
+        approximate_instances: 1800
+        metric: "f1"
+
+    prediction:
+      exploit_likelihood:
+        approximate_instances: 2500
+        metric: "roc_auc"
+        horizon_days: null
+        binary_target_construction: null
+      impact_forecast:
+        approximate_instances: 1500
+        metric: "bleu"
+      target_sector_prediction:
+        approximate_instances: 1300
+        metric: "accuracy"
+      campaign_escalation:
+        approximate_instances: 1100
+        metric: "roc_auc"
+        horizon_days: null
+        binary_target_construction: null
+
+    mitigation:
+      patch_recommendation:
+        approximate_instances: 1900
+        metric: "f1"
+      rule_generation_yara:
+        approximate_instances: 1200
+        metric: "bleu"
+      response_summarization:
+        approximate_instances: 1800
+        metric: "bleu"
+      mitigation_ttp_mapping:
+        approximate_instances: 1500
+        metric: "accuracy"
+      defensive_playbook_generation:
+        approximate_instances: 1100
+        metric: "bleu"
+      countermeasure_ranking:
+        approximate_instances: 1300
+        metric: "ndcg"
+      incident_ticket_generation:
+        approximate_instances: 1200
+        metric: "accuracy"
+
+  scoring:
+    task_field_extraction_rules: null
+    response_level_failure_criteria: null
+    invalid_output_policy: null
+    abstention_policy: null
+
+    f1:
+      averaging: null
+      positive_class_definitions: null
+      probability_thresholds: null
+
+    accuracy:
+      exact_match_and_partial_credit_rules: null
+
+    bleu:
+      aggregation_level: null
+      tokenizer: null
+      maximum_ngram_order: null
+      smoothing: null
+      lowercase: null
+      structured_output_serialization: null
+
+    roc_auc:
+      target_definition_manifest: null
+      missing_probability_policy: null
+
+    ndcg:
+      cutoff_k: null
+      gain_function: null
+      relevance_manifest: null
+      tie_policy: null
+
+failure_identification:
+  hard_label_rules: null
+
+  stratification:
+    quantile_width: 0.05
+    similarity_measure_by_task: null
+    grouping_fields: null
+    anchor_count_per_stratum: null
+    anchor_sampling_seed: null
+    tied_score_policy: null
+    inspection_order: null
+    pass_failure_range_estimator: null
+    manually_review_boundary_cases: true
+
+    convergence:
+      require_stable_failure_distribution: true
+      require_no_new_failure_set: true
+      distribution_distance: null
+      stability_tolerance: null
+      unvisited_strata_policy: null
+
+  ## Reported workload, not a cap on required human reviews.
+  reported_manual_inspection_fraction_upper_bound: 0.015
+
+taxonomy_discovery:
+  initial_subset_size: null
+  initialization_seed: null
+  assisting_model: null
+  prompt_template_path: null
+  fallback_label: "other"
+  human_review_other_cases: true
+  add_human_supported_new_categories: true
+  stop_when_no_new_categories: true
+
+  ## Algorithm 2 mentions 0.6 only as an example.
+  coverage_threshold: null
+  coverage_definition: null
+  stability_threshold_epsilon: null
+  revisit_prior_assignments_policy: null
+  persistent_other_policy: null
+
+taxonomy:
+  multiple_labels_allowed: true
+  require_evidence_for_each_label: true
+  guideline_manifest: null
+
+  published_reference:
+    spurious_correlation:
+      "1.1": "Co-mention bias"
+      "1.2": "Exploitation bias"
+      "1.3": "Confounding factors"
+      "1.4": "Skewed source"
+      "1.5": "Hierarchical metadata"
+
+    contradictory_knowledge:
+      "2.1": "Temporal contradiction"
+      "2.2": "Conflicting reports"
+      "2.3": "Semantic conflict"
+      "2.4": "Divergent data structures"
+      "2.5": "Misaligned knowledge and standards"
+      "2.6": "Counteracting CTI generation and LLM alignment"
+
+    constrained_generalization:
+      "3.1": "Distributional bias"
+      "3.2": "Unseen patterns"
+      "3.3": "Overfitted reasoning"
+      "3.4": "Environmental unawareness"
+
+  ## Discovery must not automatically start from the published taxonomy.
+  discovery_initial_taxonomy: null
+
+categorization:
+  rounds: 2
+  first_round_independent: true
+  second_round_observes_first_round_peers: true
+  peer_payload_policy: null
+  prompt_templates:
+    round_one: null
+    round_two: null
+
+  human_review:
+    trigger_on_first_round_disagreement: true
+    trigger_on_any_agent_cross_round_change: true
+    introduce_new_categories: false
+
+  ## Singular-label algorithms and multi-label annotation need reconciliation.
+  label_set_comparison_policy: null
+  incomplete_agent_output_policy: null
+
+  ## Reported operational workload; independent audits are excluded.
+  reported_human_verification_fraction_upper_bound: 0.018
+
+annotation:
+  pool:
+    annotators: 7
+    graduate_researchers: 4
+    professional_cybersecurity_researchers: 3
+    experience_years_range: [2, 11]
+    senior_adjudicator_experience_years: 13
+
+  calibration:
+    instances: 45
+    cover_four_stages: true
+    cover_three_high_level_categories: true
+    independent_initial_annotation: true
+    discuss_disagreements: true
+    exclude_from_agreement_statistics: true
+    freeze_guideline_before_formal_reliability_study: true
+
+  agreement_study:
+    instances: 320
+    annotators_per_instance: 3
+    stratify_by:
+      - "cti_stage"
+      - "failure_category"
+    preserve_independent_labels: true
+    metrics:
+      - "krippendorff_alpha_per_binary_subtype"
+      - "macro_krippendorff_alpha"
+      - "exact_label_set_agreement"
+    uncertain_label_handling: null
+
+  adjudication:
+    review_reference_evidence: true
+    apply_frozen_inclusion_exclusion_criteria: true
+    escalate_unresolved_cases_to_senior: true
+    use_adjudicated_labels_for_agreement_statistics: false
+
+audits:
+  failure_identification:
+    instances: 100
+    sampling: "simple_random_without_replacement"
+    population: "automatically_labeled_responses"
+    sampling_seed: null
+    exclude:
+      - "human_anchors"
+      - "calibration_examples"
+      - "previously_manually_reviewed_cases"
+      - "duplicate_records"
+    independent_annotators: 2
+    disagreement_adjudicator: true
+    blind_to:
+      - "identification_scores"
+      - "automatic_assignments"
+      - "other_annotator_decisions"
+    freeze_identification_before_sampling: true
+    use_audit_labels_for_tuning: false
+    positive_class: "failure"
+    metrics: ["precision", "recall", "f1"]
+    zero_denominator_result: "N/A"
+
+  failure_categorization:
+    original_agreement_instances: 320
+    additional_instances: 480
+    total_instances: 800
+    additional_sampling_protocol: null
+    include_stable_consensus_cases: true
+    independent_human_references: true
+    evaluate_predictions_before_human_correction: true
+    count_audit_work_as_operational_verification: false
+    metrics:
+      - "per_subtype_support"
+      - "per_subtype_precision"
+      - "per_subtype_recall"
+      - "per_subtype_f1"
+      - "macro_precision_recall_f1"
+      - "micro_precision_recall_f1"
+    zero_denominator_result: "N/A"
+
+baselines:
+  repetition_count: null
+  prevalence_denominator: null
+
+  kmeans:
+    embedding_model: null
+    input_representation: null
+    clusters: null
+    initialization: null
+    cluster_to_subtype_mapping: null
+
+  lda:
+    preprocessing: null
+    topic_count: null
+    priors: null
+    iterations: null
+    topic_to_subtype_mapping: null
+
+  gpt_judge:
+    model: "GPT-5"
+    prompt_template_path: null
+
+  gemini_judge:
+    model: "Gemini 2.5"
+    prompt_template_path: null
+
+  multi_agent_debate:
+    panel: "models.categorization_panel"
+    rounds: null
+    consensus_policy: null
+    stopping_rule: null
+
+ablations:
+  components_to_remove:
+    - "stratification"
+    - "human_initiation"
+    - "multi_agent_decision"
+    - "repetition"
+    - "human_verification"
+  replacement_behavior_by_component: null
+  repetition_count: null
+
+taxonomy_stability:
+  perturbations:
+    - "initial_subset_seed"
+    - "anchor_selection"
+    - "quantile_width"
+  quantile_widths: [0.025, 0.05, 0.10]
+  independent_runs_per_condition: 5
+  condition_combination_design: null
+  audit_instances: 180
+  audit_manifest: null
+  category_matching: "maximum_weight_bipartite"
+  matching_weight: "jaccard_overlap"
+  recovery_match_threshold: null
+  unmatched_category_policy: null
+  empty_set_policy: null
+  prevalence_normalization: null
+  jsd_logarithm_base: null
+  comparison_aggregation: null
+  metrics:
+    - "taxonomy_recovery_rate"
+    - "matched_category_jaccard"
+    - "instance_label_set_jaccard"
+    - "jensen_shannon_divergence"
+
+defenses:
+  counterfactual_consistency:
+    intervention_families:
+      - "I_spur"
+      - "I_contra"
+      - "I_gen"
+
+    preserve_answer_determining_attributes: true
+    require_task_dependent_preservation_justification: true
+    consistency_is_not_correctness: true
+
+    operators: null
+    counterfactuals_per_instance: null
+    stability_threshold_tau: null
+    output_equivalence_rule: null
+    probability_extraction: null
+    entropy_weight_formula: null
+    normalize_weights: null
+    # The original supplies only the consistency target and baseline.
+    include_original_input: false
+    tie_policy: null
+    free_text_aggregation: null
+    repetition_count: null
+
+    ## JSON confidence is not a substitute for P(y | x).
+    use_self_reported_confidence_as_probability: false
+
+  tailored_mitigation:
+    configurations:
+      - "retrieval_only"
+      - "inference_only"
+      - "full_fledged"
+    subtype_policy_manifest: null
+    retrieval_models: null
+    chunking_policy: null
+    evidence_context_budget: null
+    source_diversity_parameters: null
+    freshness_parameters: null
+    ioc_reuse_thresholds: null
+    prompt_manifest: null
+    routing_policy: null
+    model_group_aggregation: null
+    repetition_count: null
+
+  stronger_grounding:
+    tasks:
+      - "affected_systems"
+      - "threat_actor_linking"
+      - "patch_recommendation"
+    models: ["G5", "CLD"]
+    instances_per_task: 100
+    distinct_task_instances: 300
+    model_instance_pairs_per_configuration: 600
+    runs: 1
+    report_standard_deviation: false
+    sampling_seed: null
+    matched_instance_manifest: null
+
+    configurations:
+      - "original"
+      - "strong_rag"
+      - "strong_rag_with_evidence_verification"
+
+    retrieval:
+      sparse_retriever: null
+      dense_retriever: null
+      fusion_rule: null
+      retrieval_depth: null
+      cross_encoder_reranker: null
+      reranking_depth: null
+      evidence_context_budget: null
+      same_corpus_snapshot_between_grounding_variants: true
+
+    evidence_verification:
+      method: "AlignScore"
+      checkpoint: null
+      claim_segmentation: null
+      alignment_threshold: null
+      revision_passes: 1
+      revision_prompt_template_path: null
+      use_verifier_scores_as_final_labels: false
+
+    comparison_controls:
+      same_instances: true
+      same_task_inputs: true
+      same_references: true
+      same_decoding_settings: true
+      same_failure_identification_criteria: true
+
+    metrics:
+      - "original_task_metric"
+      - "response_level_failure_rate"
+      - "absolute_failure_rate_reduction_percentage_points"
+
+reproducibility:
+  freeze_corpus_and_reference_versions: true
+  freeze_prompts_and_generation_settings: true
+  retain_raw_model_outputs: true
+  retain_pre_correction_predictions: true
+  retain_independent_human_labels: true
+  separate_operational_review_from_audits: true
+  record_implementation_choices: true
+  silently_substitute_models: false
+  silently_fill_unspecified_settings: false

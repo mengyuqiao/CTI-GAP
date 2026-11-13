@@ -1,0 +1,35 @@
+version: subtype-policies-v1
+source: Appendix H.2
+routing: universal
+uses_gold_failure_labels: false
+policies:
+  '1.1':
+    inference: Require an incident-role evidence span and an explicit relation for each actor/tool attribution; co-mention alone is insufficient.
+  '1.2':
+    inference: Distinguish historical or widely reused IOCs from current campaign-specific behavioral evidence before making attribution or mitigation claims.
+  '1.3':
+    inference: Base the conclusion on behavior, exploitation mechanism, toolmarks or ownership. Check whether incidental sector/region/date metadata alone changes it and abstain if causal evidence is insufficient.
+  '1.4':
+    inference: Require independent publisher corroboration for high-confidence claims; describe conflicting views and uncertainty when sources disagree.
+  '1.5':
+    inference: Preserve technique/sub-technique granularity. Treat kill-chain hierarchy as descriptive metadata and infer no later-stage action without explicit artifacts.
+  '2.1':
+    inference: Reconcile dated claims at the supplied snapshot; prefer newer corroborated evidence unless weaker, retaining conflicting timestamps when unresolved.
+  '2.2':
+    inference: Keep source/claim views separate. Summarize divergent contexts and justify selection or state what evidence is missing.
+  '2.3':
+    inference: Distinguish identical entities, supported aliases and related-but-different entities; check negation before merging claims.
+  '2.4':
+    inference: Reason from typed normalized records with explicit field meanings, while retaining citations to original evidence spans.
+  '2.5':
+    inference: Use the provided authoritative version of identifiers and standards, select only supported options, and return insufficient evidence for unsupported mappings.
+  '2.6':
+    inference: Express defensive CTI claims concisely with grounding citations and calibrated uncertainty; do not suppress reference-supported defensive facts through a generic refusal.
+  '3.1':
+    inference: Avoid actor/region/sector stereotypes; require causal indicators and consider underrepresented threat contexts.
+  '3.2':
+    inference: For novel behaviors, distinguish cautious hypotheses from established facts, mark unknowns and identify confirming or refuting evidence.
+  '3.3':
+    inference: Reject memorized tool-to-actor shortcuts when attribution evidence is insufficient; consider counterevidence and alternatives.
+  '3.4':
+    inference: Condition risk and mitigation on the supplied environment, asset versions, deployment dependencies and operational constraints.

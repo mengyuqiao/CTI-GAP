@@ -1,0 +1,34 @@
+# Publish the implementation, tests, and files needed to configure and run it.
+# Local research documents, datasets, results, and environments stay private.
+/*
+
+# Keep the ignore policy, project README, dependencies, and application modules.
+!/.gitignore
+!/README.md
+!/LICENSE
+!/requirements.txt
+!/config.yaml
+!/*.py
+
+# Keep the shipped scientific configuration templates and prompt templates.
+!/configs/
+/configs/**
+!/configs/**/
+!/configs/**/*.yaml
+!/prompts/
+/prompts/**
+!/prompts/**/
+!/prompts/**/*.jinja2
+
+# Keep Python tests, including modules in nested test directories.
+!/tests/
+/tests/**
+!/tests/**/
+!/tests/**/*.py
+
+# Generated files and secrets must remain ignored.
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.env
+.env.*
